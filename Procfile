@@ -1,1 +1,1 @@
-web: gunicorn hello_djaongo.wsgi --log-file -
+web: gunicorn hello_django.wsgi --log-file -
