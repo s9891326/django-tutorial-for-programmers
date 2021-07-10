@@ -1,0 +1,57 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>店家列表 | 午餐系統</title>#}
+{#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">#}
+{#</head>#}
+{#<body>#}
+{#<nav class="navbar navbar-default navbar-static-top" role="navigation">#}
+{#    <div class="container">#}
+{#        <div class="navbar-header">#}
+{#            <a class="navbar-brand" href="{% url 'page:home' %}">午餐系統</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</nav>#}
+{##}
+{#<div class="container">#}
+{#    {% for store in stores %}#}
+{#    <div class="store">#}
+{# 在 stores/store_list.html 中，我們用了一個 url tag 來得到某個店家的內容頁網址。#}
+{# 但這個網址基本上和店家是一對一關聯，而且永遠和店家本身綁定。所以這個邏輯似乎應該被放到 model class，#}
+{# 而不是 template——這樣如果哪天我們想把店家頁面換到其他地方，就不需要修改所有的 url tag。 #}
+{# <h2><a href="{% url 'store:store_detail' pk=store.pk %}">{{ store.name }}</a></h2>#}
+{#        <h2><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h2>#}
+{#        <p>{{ store.notes }}</p>#}
+{#    </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{#</body>#}
+{#</html>#}
+
+{% extends 'stores/base.html' %}
+{% load stores_tags %}
+{% load static %}
+
+{% block title %}店家列表 | {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <a href="{% url 'store:store_create' %}">建立店家</a>
+
+    {% for store in stores %}
+        <div class="store">
+            <h2><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h2>
+            <p>{{ store.notes }}</p>
+            {% if store|deletable:user %}
+                <button data-href="{% url 'store:store_delete' store.pk %}"
+                        class="btn btn-danger pull-right btn-delete">
+                    刪除
+                </button>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'stores/js/store_list.js' %}"></script>
+{% endblock js %}

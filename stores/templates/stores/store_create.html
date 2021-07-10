@@ -1,0 +1,16 @@
+{% extends "stores/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}建立店家 | {{ block.super }}{% endblock %}
+
+{% block content %}
+    {#    <form action="" method="post" role="form">#}
+    {#這裡的重點是 Django 會使用這個 token 來確認你的 form request 有否被偽造。所以如果你要使用 Django form，就必須記得加上這個欄位。#}
+    {#        {% csrf_token %}#}
+    {#    as_p 告訴 Django 要用 <p> 把 form field 包起來（才能換行）#}
+    {#    {{ form.as_p }}#}
+    {#        {{ form|crispy }}#}
+    {#        <button type="submit" class="btn btn-primary">建立</button>#}
+    {#    </form>#}
+    {% crispy form %}
+{% endblock content %}

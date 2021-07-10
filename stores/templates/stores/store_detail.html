@@ -1,0 +1,75 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>{{ store.name }} | 午餐系統</title>#}
+{#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">#}
+{#</head>#}
+{#<body>#}
+{#<nav class="navbar navbar-default navbar-static-top" role="navigation">#}
+{#    <div class="container">#}
+{#        <div class="navbar-header">#}
+{#            <a class="navbar-brand" href="{% url 'page:home' %}">午餐系統</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</nav>#}
+{##}
+{#<div class="container">#}
+{#    <h1>{{ store.name }}</h1>#}
+{#    <p>{{ store.notes }}</p>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <th>品項</th>#}
+{#            <th>單價</th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for item in store.menu_items.all %}#}
+{#        <tr>#}
+{#            <td>{{ item.name }}</td>#}
+{#            <td>{{ item.price }}</td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</div>#}
+{#</body>#}
+{#</html>#}
+
+{% extends 'stores/base.html' %}
+{% load stores_tags %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ store.name }} | {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <h1>{{ store.name }}</h1>
+    <p>{{ store.notes }}</p>
+    <a href="{% url 'store:store_update' pk=store.pk %}" class="btn btn-default">更新店家資訊</a>
+    <form method="post" action="{% url 'store:store_delete' store.pk %}">
+        {% csrf_token %}
+        {% if store|deletable:user %}
+            <button type="submit" class="btn btn-danger">刪除</button>
+        {% endif %}
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>品項</th>
+            <th>單價</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in store.menu_items.all %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if user.is_authenticated %}
+        {% crispy event_form %}
+    {% endif %}
+{% endblock content %}
