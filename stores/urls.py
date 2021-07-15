@@ -19,5 +19,5 @@ v1.register("store", views.StoreViewSet)
 v1.register("stores/menu_item", views.MenuItemViewSet)
 
 urlpatterns += [
-    path("api/v1/", include(v1.urls)),
+    path("api/", include(v1.urls)),
 ]
