@@ -33,31 +33,226 @@
 - `heroku open`
 
 ### API文件
+- 皆須在Header內加入JWT token(`Authorization: JWT <token>`)
 
 <details>
 <summary>Store(GET)</summary>
 
 - 獲取所有店家及店家菜單
 
-| 項目 | 說明 |
-|------|-----|
-| API URL | {server_domain}/store/api/store/ |
-| method | GET(階層資料) |
+    | 項目 | 說明 |
+    |------|-----|
+    | API URL | {server_domain}/store/api/store/ |
+    | method | GET(階層資料) |
 
-- Request
-1. JWT token
+- Request: 無
 
 - Response
 
-| 欄位 | 名稱 | 資料類型 | 說明 |
-|------|-----|---------|------|
-| id | 店家ID | integer | |
-| name | 店家名稱 | string | |
-| notes | 店家說明 | string | |
-| owner | 使用者ID | integer | |
-| menu_items | 菜單清單 | array | |
-| menu_items.name | 菜單名稱 | string | |
-| menu_items.price | 菜單價格 | integer | |
+    | 欄位 | 資料類型 | 說明 |
+    |------|---------|------|
+    | id | integer | 店家ID |
+    | name | string | 店家名稱 |
+    | notes | string | 店家說明 |
+    | owner | integer | 使用者ID |
+    | menu_items | array | 菜單清單 ，包含name、price |
+    | menu_items.name | string | 菜單名稱 |
+    | menu_items.price | integer | 菜單價格 |
+
+- Response Example
+
+```json
+[
+    {
+        "id": 1,
+        "menu_items": [
+            {
+                "name": "大碗",
+                "price": 140
+            },
+            {
+                "name": "中碗",
+                "price": 130
+            },
+            {
+                "name": "小碗",
+                "price": 120
+            }
+        ],
+        "name": "台北-黑庄牛肉麵",
+        "notes": "超好吃~ 一定要吃看看",
+        "owner": 1
+    }
+]
+```
+
+</details>
+
+<details>
+<summary>Store(POST)</summary>
+
+- 新增店家及店家菜單
+
+    | 項目 | 說明 |
+    |------|-----|
+    | API URL | {server_domain}/store/api/store/ |
+    | method | POST(階層資料) |
+
+- Request
+
+    | 欄位 | 資料類型 | 說明 |
+    |------|---------|------|
+    | name | string | 店家名稱 |
+    | notes | string | 店家說明 |
+    | owner | integer | 使用者ID |
+    | menu_items | array | 菜單清單 ，包含name、price |
+    | menu_items.name | string | 菜單名稱 |
+    | menu_items.price | integer | 菜單價格 |
+
+- Response
+
+    | 欄位 | 資料類型 | 說明 |
+    |------|---------|------|
+    | id | integer | 店家ID |
+    | name | string | 店家名稱 |
+    | notes | string | 店家說明 |
+    | owner | integer | 使用者ID |
+    | menu_items | array | 菜單清單 ，包含name、price |
+    | menu_items.name | string | 菜單名稱 |
+    | menu_items.price | integer | 菜單價格 |
+
+- Request Example
+
+```json
+{
+    "name": "postman",
+    "notes": "postman notes",
+    "owner": "1",
+    "menu_items": [
+        {
+            "name": "postman1",
+            "price": 1
+        },
+        {
+            "name": "postman2",
+            "price": 2
+        }
+    ]
+}
+```
+
+- Response Example
+
+```json
+{
+    "id": 2,
+    "menu_items": [
+        {
+            "name": "postman1",
+            "price": 1
+        },
+        {
+            "name": "postman2",
+            "price": 2
+        }
+    ],
+    "name": "postman",
+    "notes": "postman notes",
+    "owner": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Store(PUT)</summary>
+
+- 新增店家及店家菜單
+
+    | 項目 | 說明 |
+    |------|-----|
+    | API URL | {server_domain}/store/api/store/ |
+    | method | POST(階層資料) |
+
+- Request
+
+    | 欄位 | 資料類型 | 說明 |
+    |------|---------|------|
+    | name | string | 店家名稱 |
+    | notes | string | 店家說明 |
+    | owner | integer | 使用者ID |
+    | menu_items | array | 菜單清單 ，包含name、price |
+    | menu_items.name | string | 菜單名稱 |
+    | menu_items.price | integer | 菜單價格 |
+
+- Response
+
+    | 欄位 | 資料類型 | 說明 |
+    |------|---------|------|
+    | id | integer | 店家ID |
+    | name | string | 店家名稱 |
+    | notes | string | 店家說明 |
+    | owner | integer | 使用者ID |
+    | menu_items | array | 菜單清單 ，包含name、price |
+    | menu_items.name | string | 菜單名稱 |
+    | menu_items.price | integer | 菜單價格 |
+
+- Request Example
+
+```json
+{
+    "name": "postman",
+    "notes": "postman notes",
+    "owner": "1",
+    "menu_items": [
+        {
+            "name": "postman1",
+            "price": 1
+        },
+        {
+            "name": "postman2",
+            "price": 2
+        }
+    ]
+}
+```
+
+- Response Example
+
+```json
+{
+    "id": 2,
+    "menu_items": [
+        {
+            "name": "postman1",
+            "price": 1
+        },
+        {
+            "name": "postman2",
+            "price": 2
+        }
+    ],
+    "name": "postman",
+    "notes": "postman notes",
+    "owner": 1
+}
+```
+
+</details>
+
+<details>
+<summary>Store(DEL)</summary>
+
+- 刪除店家及店家菜單
+
+    | 項目 | 說明 |
+    |------|-----|
+    | API URL | {server_domain}/store/api/store/{store_id}/ |
+    | method | DEL |
+
+- Request: 無
+
+- Response: 無
 
 </details>
 
