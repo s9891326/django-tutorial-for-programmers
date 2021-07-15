@@ -21,6 +21,7 @@
 - `git commit -m "message"`
 - `heroku login`: 會跳出一個UI介面讓你登入
 - `git push heroku master`
+- `heroku open`
 
 ### api文件
 

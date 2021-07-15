@@ -129,7 +129,7 @@ class MenuItemViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
 class StoreViewSet(viewsets.ModelViewSet):
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
