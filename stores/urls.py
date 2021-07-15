@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from . import views
 
@@ -10,4 +11,13 @@ urlpatterns = [
     path("new/", views.store_create, name="store_create"),
     path("<int:pk>/update/", views.store_update, name="store_update"),
     path("<int:pk>/delete/", views.store_delete, name="store_delete"),
+]
+
+# rest api
+v1 = routers.DefaultRouter()
+v1.register("store", views.StoreViewSet)
+v1.register("stores/menu_item", views.MenuItemViewSet)
+
+urlpatterns += [
+    path("api/v1/", include(v1.urls)),
 ]

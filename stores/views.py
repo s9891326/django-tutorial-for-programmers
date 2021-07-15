@@ -5,8 +5,10 @@ from django.shortcuts import render, redirect
 # from django.forms.models import modelform_factory
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
+from rest_framework import viewsets, mixins, permissions
 
 from events.forms import EventForm
+from stores.serializers import StoreSerializer, MenuItemRelatedSerializer
 from .models import Store, MenuItem
 from .forms import StoreForm, MenuItemFormSet
 
@@ -118,3 +120,22 @@ def store_delete(request, pk):
     return HttpResponseForbidden()
 
 
+class MenuItemViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemRelatedSerializer
+
+
+class StoreViewSet(viewsets.ModelViewSet):
+    queryset = Store.objects.all()
+    serializer_class = StoreSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     store = serializer.save()
+    #     print(store)
+        # serializer.save(menu_items=)
+        # headers = self.get_success_headers(serializer.data)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

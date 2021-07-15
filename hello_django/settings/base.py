@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 LOGIN_REDIRECT_URL = reverse_lazy('page:home')
 
+# When set to True, if the request URL does not match any of the patterns in the URLconf and it doesn’t end in a slash,
+# an HTTP redirect is issued to the same URL with a slash appended. Note that the redirect may cause any data submitted in a POST request to be lost.
+APPEND_SLASH = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,7 +50,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    # Django REST Framework 預設就是使用 JSON，所以不用設定。
+    # 使用 session 登入。
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    # 必須登入才能使用。
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
