@@ -33,7 +33,7 @@ class StoreSerializer(serializers.ModelSerializer):
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
 
-                # for menu_item in menu_items_data:
+        # for menu_item in menu_items_data:
         #     menu_items.name = menu_item.get("name", "")
         #     menu_items.price = menu_item.get("price", 0)
         #     menu_items.save()

@@ -19,7 +19,21 @@
 #### JWT Token
 - 為登入驗證機制。保存期限為1天，提供token刷新功能。
 - 登入成功後要在Header內帶入`Authorization: JWT <token>`，才能順利完成後續API呼叫
-- `api-token-auth/`: 登入token驗證接口
+
+<details>
+<summary>api-token-auth/</summary>
+
+- 登入token驗證接口
+
+    | 項目 | 說明 |
+    |------|-----|
+    | API URL | {server_domain}/api-token-auth/ |
+    | method | POST(階層資料) |
+    
+</details>
+
+- `api-token-auth/`: 登入token驗證接口，需輸入username、password
+    - example: `{server_domain}/api-token-auth`
 - `api-token-refresh/`: token刷新接口
 
 ### Heroku部屬
@@ -35,6 +49,7 @@
 ### API文件
 - 皆須在Header內加入JWT token(`Authorization: JWT <token>`)
 
+#### Store
 <details>
 <summary>Store(GET)</summary>
 
